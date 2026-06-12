@@ -63,6 +63,7 @@ def Match_Analysis():
     plt.tight_layout()
     plt.show()
 def Batting_Analysis():
+    sns.set_style("whitegrid")
     plt.figure(figsize=(10,8))
     top_batsmen = (file1.groupby("batsman")["batsman_runs"].sum().sort_values(ascending=False).reset_index().head(5))
     sns.barplot(data=(top_batsmen),y="batsman",x="batsman_runs",hue="batsman",palette="viridis")
@@ -96,6 +97,7 @@ def Batting_Analysis():
     plt.tight_layout()
     plt.show()
 def Team_Analysis():
+    sns.set_style("whitegrid")
     plt.figure(figsize=(10,8))
     sns.countplot(data=file2,y="toss_winner",hue="toss_decision",palette="viridis")
     plt.title("Teams And Toss Decisions")
@@ -112,8 +114,36 @@ def Team_Analysis():
     plt.legend(title="Decision")
     plt.tight_layout()
     plt.show()
-
+def Comparative_Analysis():
+    sns.set_style("whitegrid")
+    plt.figure(figsize=(10,8))
+    tops=file2["venue"].value_counts().head(10).index
+    sns.countplot(data=file2[file2["venue"].isin(tops)],y="venue",hue="toss_decision",order=tops,palette="viridis")
+    plt.title("Toss Decisions in Top 10 IPL Stadiums")
+    plt.xlabel("No. Of Matches ")
+    plt.ylabel("Stadium")
+    plt.legend(title="Decision")
+    plt.tight_layout()
+    plt.show()
+    tops5=file2["venue"].value_counts().head(5).index
+    plt.figure(figsize=(10,8))
+    sns.countplot(data=file2[file2["venue"].isin(tops)],y="venue",hue="winner",order=tops5,palette="viridis")
+    plt.title("Most Common Winner Teams In Top 5 IPL Stadiums")
+    plt.xlabel("No. Of Victories")
+    plt.ylabel("Stadium")
+    plt.legend(title="Winning Team")
+    plt.tight_layout()
+    plt.show()
+    plt.figure(figsize=(10,8))
+    top5=file2["Season"].value_counts().head(5).index
+    sns.countplot(data=file2[file2["Season"].isin(top5)],y="Season",hue="winner",order=top5,palette="viridis")
+    plt.title("Most Common Winner Teams in Top 5 IPL Seasons")
+    plt.xlabel("No. Of Victories")
+    plt.legend(title="Winning Team")
+    plt.tight_layout()
+    plt.show()
 Data_Assessment()
 Match_Analysis()
 Batting_Analysis()
 Team_Analysis()
+Comparative_Analysis()
