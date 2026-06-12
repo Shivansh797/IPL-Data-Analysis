@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
@@ -8,6 +7,7 @@ file2=pd.read_csv(r"C:\Users\shiva\OneDrive\Desktop\matches.csv")
 script_dir=os.path.dirname(os.path.abspath(__file__))
 save=os.path.join(script_dir,"Graphs_And_Charts")
 if not os.path.exists(save):os.makedirs(save)
+
 def Data_Assessment():
     print(file1.dtypes)
     print(file2.dtypes)
@@ -15,7 +15,7 @@ def Data_Assessment():
     print(file2.head())
     print(file1.isnull().sum()) #Null values present in player_dismissed,dismissal_kind and fielder.
     print(file2.isnull().sum()) #Null values present in city,winner,umpire1,umpire2,umpire3.
-    print(file1[file1.duplicated()]) #No Major duplicates out of more than 20000 matches few coincidences can be neglected.
+    print(file1[file1.duplicated()]) #No Major duplicates player_dismissed of more than 20000 matches few coincidences can be neglected.
     print(file2[file2.duplicated()]) #No Duplicates at all.
 def Match_Analysis():
     plt.figure(figsize=(10,8))
@@ -109,14 +109,13 @@ def Batting_Analysis():
 def Bowling_Analysis():
     sns.set_style("whitegrid")
     plt.figure(figsize=(10,8))
-    file1["out"]=file1["player_dismissed"]!=np.nan
-    Wicket_Takers=(file1.groupby("bowler")["out"].sum().sort_values(ascending=False).head(10))
-    sns.barplot(data=(Wicket_Takers.reset_index()),y="bowler",x="out",hue="bowler",palette="viridis")
-    plt.title("Top 10 Wicket Takers Of IPL")
-    plt.xlabel("Wickets Taken")
-    plt.ylabel("Bowler")
+    Wicket_Takers=(file1[file1["player_dismissed"].notna()].groupby("bowler")["player_dismissed"].count().sort_values(ascending=False).head(5))
+    sns.barplot(data=(Wicket_Takers.reset_index()),x="bowler",y="player_dismissed",hue="bowler",palette="viridis")
+    plt.title("Top 5 Wicket Takers Of IPL")
+    plt.ylabel("Wickets Taken")
+    plt.xlabel("Bowler")
     plt.tight_layout()
-    plt.savefig(os.path.join(save, "TOP10_Bowlers.png"),dpi=300)
+    plt.savefig(os.path.join(save, "TOP5_Bowlers.png"),dpi=300)
     plt.show()
     top_bowler = (file1.groupby("bowler")["total_runs"].sum().sort_values(ascending=True).reset_index().head(5))
     sns.barplot(data=(top_bowler),y="bowler",x="total_runs",hue="bowler",palette="viridis")
@@ -192,6 +191,7 @@ def Comparative_Analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(save,"Season-Winner_Team.png"),dpi=300)
     plt.show()
+
 Data_Assessment()
 Match_Analysis()
 Batting_Analysis()
