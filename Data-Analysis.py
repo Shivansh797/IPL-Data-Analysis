@@ -187,7 +187,7 @@ def Comparative_Analysis():
     sns.countplot(data=file2[file2["Season"].isin(top5)],y="Season",hue="winner",order=top5,palette="viridis")
     plt.title("Most Common Winner Teams in Top 5 IPL Seasons")
     plt.xlabel("No. Of Victories")
-    plt.legend(title="Winning Team")
+    plt.legend(bbox_to_anchor=(1,0.5),title="Winning Team",loc="upper left")
     plt.tight_layout()
     plt.savefig(os.path.join(save,"Season-Winner_Team.png"),dpi=300)
     plt.show()
