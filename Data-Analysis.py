@@ -25,6 +25,7 @@ def Match_Analysis():
     plt.xlabel("No. Of Matches Won")
     plt.ylabel("Team")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Most_Successful_Teams.png"),dpi=300)
     plt.show()
     plt.figure(figsize=(10,8))
     sns.set_style("whitegrid")
@@ -34,6 +35,7 @@ def Match_Analysis():
     plt.xlabel("No. Of Matches Played")
     plt.ylabel("Stadium")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Top_IPL_Stadiums.png"),dpi=300)
     plt.show()
     plt.figure(figsize=(10,8))
     sns.set_style("whitegrid")
@@ -43,6 +45,7 @@ def Match_Analysis():
     plt.ylabel("No. Of Times Player Of The Match Awarded")
     plt.xlabel("Player")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Highest_Playerofmatch.png"),dpi=300)
     plt.show()
     plt.figure(figsize=(10,8))
     sns.set_style("whitegrid")
@@ -54,6 +57,7 @@ def Match_Analysis():
     plt.ylabel("Team")
     plt.legend(bbox_to_anchor=(1,0.5),title="Won Both Match And Toss ?",loc="upper left")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Tosswinner-Matchwinner.png"),dpi=300)
     plt.show()
     count1=file2["Season"].value_counts().index
     sns.countplot(data=file2[file2["Season"].isin(count1)],y="Season",order=count1,color="turquoise")
@@ -61,6 +65,7 @@ def Match_Analysis():
     plt.xlabel("No. Of Matches")
     plt.ylabel("IPL Season")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Top_IPL_Seasons.png"),dpi=300)
     plt.show()
 def Batting_Analysis():
     sns.set_style("whitegrid")
@@ -70,6 +75,7 @@ def Batting_Analysis():
     plt.title("Top 10 Run Scorers In IPL")
     plt.xlabel("Runs Scored")
     plt.ylabel("Batsman")
+    plt.savefig(os.path.join(save,"Top_runscorer.png"),dpi=300)
     plt.show()
     plt.figure(figsize=(10,8))
     file1["sixes"]=file1["batsman_runs"]==6
@@ -78,6 +84,7 @@ def Batting_Analysis():
     plt.title("Top 10 Six Hitters In IPL")
     plt.xlabel("No. Of Sixes")
     plt.ylabel("Batsman")
+    plt.savefig(os.path.join(save,"Top_sixhitters.png"),dpi=300)
     plt.show()
     plt.figure(figsize=(10,8))
     file1["fours"]=file1["batsman_runs"]==4
@@ -87,6 +94,7 @@ def Batting_Analysis():
     plt.xlabel("No. Of Fours")
     plt.ylabel("Batsman")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Top_Fourhitters.png"),dpi=300)
     plt.show()
     plt.figure(figsize=(10,8))
     topb=file1["batsman"].value_counts().head(10).index
@@ -95,6 +103,7 @@ def Batting_Analysis():
     plt.xlabel("NO. Of Balls")
     plt.ylabel("Batsman")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Top_Battsman_Playingmostballs.png"),dpi=300)
     plt.show()
 def Team_Analysis():
     sns.set_style("whitegrid")
@@ -105,16 +114,19 @@ def Team_Analysis():
     plt.ylabel("Team")
     plt.legend(title="Decision")
     plt.tight_layout()
-    plt.show()
-    plt.figure(figsize=(10,8))
-    sns.countplot(data=file2,y="winner",hue="toss_decision",palette="viridis")
-    plt.title("Victories And Toss Decisions")
-    plt.xlabel("No. Of Victories")
-    plt.ylabel("Team")
-    plt.legend(title="Decision")
-    plt.tight_layout()
+    plt.savefig(os.path.join(save,"Team_Toss_Decision.png"),dpi=300)
     plt.show()
 def Comparative_Analysis():
+    plt.figure(figsize=(10,8))
+    file2["toss_winner_won_match"] = file2["toss_winner"] == file2["winner"]
+    sns.countplot(data=file2,x="toss_decision",hue="toss_winner_won_match",palette=["#D32F2F", "#2E7D32"])
+    plt.title("Victory-Toss Decision Chart")
+    plt.ylabel("No. Of Matches Won")
+    plt.xlabel("Toss Decision")
+    plt.legend(title="Won Both Match And Toss ?")
+    plt.tight_layout()
+    plt.savefig(os.path.join(save,"victories-Toss_Decision.png"),dpi=300)
+    plt.show()
     sns.set_style("whitegrid")
     plt.figure(figsize=(10,8))
     tops=file2["venue"].value_counts().head(10).index
@@ -124,6 +136,7 @@ def Comparative_Analysis():
     plt.ylabel("Stadium")
     plt.legend(title="Decision")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Stadium-Toss_Decision"),dpi=300)
     plt.show()
     tops5=file2["venue"].value_counts().head(5).index
     plt.figure(figsize=(10,8))
@@ -133,6 +146,7 @@ def Comparative_Analysis():
     plt.ylabel("Stadium")
     plt.legend(title="Winning Team")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Stadium-Winner_Team.png"),dpi=300)
     plt.show()
     plt.figure(figsize=(10,8))
     top5=file2["Season"].value_counts().head(5).index
@@ -141,6 +155,7 @@ def Comparative_Analysis():
     plt.xlabel("No. Of Victories")
     plt.legend(title="Winning Team")
     plt.tight_layout()
+    plt.savefig(os.path.join(save,"Season-Winner_Team.png"),dpi=300)
     plt.show()
 Data_Assessment()
 Match_Analysis()
