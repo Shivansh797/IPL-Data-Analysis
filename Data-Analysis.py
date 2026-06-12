@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
@@ -15,7 +16,7 @@ def Data_Assessment():
     print(file1.isnull().sum()) #Null values present in player_dismissed,dismissal_kind and fielder.
     print(file2.isnull().sum()) #Null values present in city,winner,umpire1,umpire2,umpire3.
     print(file1[file1.duplicated()]) #No Major duplicates out of more than 20000 matches few coincidences can be neglected.
-    print(file2[file1.duplicated()]) #No Duplicates at all.
+    print(file2[file2.duplicated()]) #No Duplicates at all.
 def Match_Analysis():
     plt.figure(figsize=(10,8))
     sns.set_style("whitegrid")
@@ -72,7 +73,7 @@ def Batting_Analysis():
     plt.figure(figsize=(10,8))
     top_batsmen = (file1.groupby("batsman")["batsman_runs"].sum().sort_values(ascending=False).reset_index().head(5))
     sns.barplot(data=(top_batsmen),y="batsman",x="batsman_runs",hue="batsman",palette="viridis")
-    plt.title("Top 10 Run Scorers In IPL")
+    plt.title("Top 5 Run Scorers In IPL")
     plt.xlabel("Runs Scored")
     plt.ylabel("Batsman")
     plt.savefig(os.path.join(save,"Top_runscorer.png"),dpi=300)
@@ -105,6 +106,40 @@ def Batting_Analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(save,"Top_Battsman_Playingmostballs.png"),dpi=300)
     plt.show()
+def Bowling_Analysis():
+    sns.set_style("whitegrid")
+    plt.figure(figsize=(10,8))
+    file1["out"]=file1["player_dismissed"]!=np.nan
+    Wicket_Takers=(file1.groupby("bowler")["out"].sum().sort_values(ascending=False).head(10))
+    sns.barplot(data=(Wicket_Takers.reset_index()),y="bowler",x="out",hue="bowler",palette="viridis")
+    plt.title("Top 10 Wicket Takers Of IPL")
+    plt.xlabel("Wickets Taken")
+    plt.ylabel("Bowler")
+    plt.tight_layout()
+    plt.savefig(os.path.join(save, "TOP10_Bowlers.png"),dpi=300)
+    plt.show()
+    top_bowler = (file1.groupby("bowler")["total_runs"].sum().sort_values(ascending=True).reset_index().head(5))
+    sns.barplot(data=(top_bowler),y="bowler",x="total_runs",hue="bowler",palette="viridis")
+    plt.title("Top 5 Most Economical Bowlers In IPL")
+    plt.xlabel("Runs Scored")
+    plt.ylabel("Bowler")
+    plt.savefig(os.path.join(save,"Top_Economical_Bowlers.png"),dpi=300)
+    plt.show()
+    top_bowlerex = (file1.groupby("bowler")["total_runs"].sum().sort_values(ascending=False).reset_index().head(5))
+    sns.barplot(data=(top_bowlerex),y="bowler",x="total_runs",hue="bowler",palette="viridis")
+    plt.title("Top 5 Most Expensive Bowlers In IPL")
+    plt.xlabel("Runs Scored")
+    plt.ylabel("Bowler")
+    plt.savefig(os.path.join(save,"Top_Expensive_Bowlers.png"),dpi=300)
+    plt.show()
+    topb=file1["bowler"].value_counts().head(10).index
+    sns.countplot(data=file1[file1["bowler"].isin(topb)],y="bowler",order=topb,hue="bowler",legend=False,palette="viridis")
+    plt.title("Top 10 Bowlers Who Played Most Of The Balls In IPL")
+    plt.xlabel("Balls Played")
+    plt.ylabel("Bowler")
+    plt.tight_layout()
+    plt.savefig(os.path.join(save,"Top_Bowlers.png"),dpi=300)
+    plt.show()
 def Team_Analysis():
     sns.set_style("whitegrid")
     plt.figure(figsize=(10,8))
@@ -136,11 +171,11 @@ def Comparative_Analysis():
     plt.ylabel("Stadium")
     plt.legend(title="Decision")
     plt.tight_layout()
-    plt.savefig(os.path.join(save,"Stadium-Toss_Decision"),dpi=300)
+    plt.savefig(os.path.join(save,"Stadium-Toss_Decision.png"),dpi=300)
     plt.show()
     tops5=file2["venue"].value_counts().head(5).index
     plt.figure(figsize=(10,8))
-    sns.countplot(data=file2[file2["venue"].isin(tops)],y="venue",hue="winner",order=tops5,palette="viridis")
+    sns.countplot(data=file2[file2["venue"].isin(tops5)],y="venue",hue="winner",order=tops5,palette="viridis")
     plt.title("Most Common Winner Teams In Top 5 IPL Stadiums")
     plt.xlabel("No. Of Victories")
     plt.ylabel("Stadium")
@@ -160,5 +195,6 @@ def Comparative_Analysis():
 Data_Assessment()
 Match_Analysis()
 Batting_Analysis()
+Bowling_Analysis()
 Team_Analysis()
 Comparative_Analysis()
