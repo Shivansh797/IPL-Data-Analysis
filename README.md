@@ -337,3 +337,16 @@ The findings highlight:
 - The relationship between longevity, wickets taken, deliveries bowled, and total runs conceded among leading bowlers.
 
 Overall, this project demonstrates how exploratory data analysis can transform raw sports data into meaningful insights and visual stories using Python's data analysis and visualization ecosystem.
+## How to Run
+
+1. Install required libraries
+
+pip install -r requirements.txt
+
+2. Place matches.csv and deliveries.csv in the correct location.
+
+3. Run:
+
+python IPL_Analysis.py
+
+4. Generated charts will be saved in the Graphs_And_Charts folder.

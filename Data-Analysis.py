@@ -15,7 +15,7 @@ def Data_Assessment():
     print(file2.head())
     print(file1.isnull().sum()) #Null values present in player_dismissed,dismissal_kind and fielder.
     print(file2.isnull().sum()) #Null values present in city,winner,umpire1,umpire2,umpire3.
-    print(file1[file1.duplicated()]) #No Major duplicates player_dismissed of more than 20000 matches few coincidences can be neglected.
+    print(file1[file1.duplicated()]) #Very few duplicate delivery records found; likely negligible compared to dataset size.
     print(file2[file2.duplicated()]) #No Duplicates at all.
 def Match_Analysis():
     plt.figure(figsize=(10,8))
@@ -119,7 +119,7 @@ def Bowling_Analysis():
     plt.show()
     top_bowler = (file1.groupby("bowler")["total_runs"].sum().sort_values(ascending=True).reset_index().head(5))
     sns.barplot(data=(top_bowler),y="bowler",x="total_runs",hue="bowler",palette="viridis")
-    plt.title("Top 5 Most Economical Bowlers In IPL")
+    plt.title("Lowest Total Runs Conceded In IPL")
     plt.xlabel("Runs Scored")
     plt.ylabel("Bowler")
     plt.savefig(os.path.join(save,"Top_Economical_Bowlers.png"),dpi=300)
@@ -134,7 +134,7 @@ def Bowling_Analysis():
     topb=file1["bowler"].value_counts().head(10).index
     sns.countplot(data=file1[file1["bowler"].isin(topb)],y="bowler",order=topb,hue="bowler",legend=False,palette="viridis")
     plt.title("Top 10 Bowlers Who Played Most Of The Balls In IPL")
-    plt.xlabel("Balls Played")
+    plt.xlabel("Deliveries Bowled")
     plt.ylabel("Bowler")
     plt.tight_layout()
     plt.savefig(os.path.join(save,"Top_Bowlers.png"),dpi=300)
