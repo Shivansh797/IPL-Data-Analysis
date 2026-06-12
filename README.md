@@ -347,6 +347,6 @@ pip install -r requirements.txt
 
 3. Run:
 
-python IPL_Analysis.py
+python Data-Analysis.py
 
 4. Generated charts will be saved in the Graphs_And_Charts folder.
