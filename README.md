@@ -306,12 +306,6 @@ These patterns suggest a noticeable home-ground advantage for several franchises
 
 ---
 
-## Most Economical Bowlers
-
-![Most Economical Bowlers](Graphs_And_Charts/Top_Economical_Bowlers.png)
-
----
-
 ## Toss Winner vs Match Winner
 
 ![Toss Winner vs Match Winner](Graphs_And_Charts/Tosswinner-Matchwinner.png)
