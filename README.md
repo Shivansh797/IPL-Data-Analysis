@@ -302,7 +302,7 @@ These patterns suggest a noticeable home-ground advantage for several franchises
 
 ## Top Wicket Takers
 
-![Top Wicket Takers](Graphs_And_Charts/TOP10_Bowlers.png)
+![Top Wicket Takers](Graphs_And_Charts/TOP5_Bowlers.png)
 
 ---
 
